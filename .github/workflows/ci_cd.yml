@@ -50,30 +50,32 @@ jobs:
           name: backend-code
           path: backend/
 
-  deploy:
-  runs-on: ubuntu-latest
-  needs: build
-  permissions:
-    contents: read
-    deployments: write   # 👈 required for deployments
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+  deploy:   # 👈 aligned correctly under jobs
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+      deployments: write   # 👈 required for deployments
 
-    # 1️⃣ Create Deployment
-    - name: Create Deployment
-      id: deploy
-      uses: chrnorm/deployment-action@releases/v2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        environment: production
-        description: "Deploying main branch"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # 2️⃣ Immediately mark Deployment as SUCCESS
-    - name: Set Deployment Status
-      uses: chrnorm/deployment-status@releases/v2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        deployment_id: ${{ steps.deploy.outputs.deployment_id }}
-        state: success
-        environment_url: "https://your-app-url.com"   
+      # 1️⃣ Create Deployment
+      - name: Create Deployment
+        id: deploy
+        uses: chrnorm/deployment-action@releases/v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          environment: production
+          description: "Deploying main branch"
+
+      # 2️⃣ Immediately mark Deployment as SUCCESS
+      - name: Set Deployment Status
+        uses: chrnorm/deployment-status@releases/v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          deployment_id: ${{ steps.deploy.outputs.deployment_id }}
+          state: success
+          environment_url: "https://your-app-url.com"
+
