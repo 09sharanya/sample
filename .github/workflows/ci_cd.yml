@@ -69,6 +69,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           environment: production
           description: "Deploying main branch"
+          payload: '{"run_id": "${{ github.run_id }}"}'
 
       # 2️⃣ Immediately mark Deployment as SUCCESS
       - name: Set Deployment Status
