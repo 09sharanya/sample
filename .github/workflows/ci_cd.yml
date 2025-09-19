@@ -75,7 +75,7 @@ jobs:
         uses: chrnorm/deployment-status@releases/v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          deployment_id: ${{ steps.deploy.outputs.deployment_id }}
+          deployment-id: ${{ steps.deploy.outputs.deployment_id }}
           state: success
-          environment_url: "https://your-app-url.com"
+          environment-url: "https://your-app-url.com"
 
